@@ -56,6 +56,7 @@ export class AuthController {
     return this.authService.updateUser(user.uid, body)
   }
 
+  // RMQ
   @EventPattern("auth.decode")
   async decodeToken({ token }: { token: string }) {
     const userId: string | undefined = await this.authService

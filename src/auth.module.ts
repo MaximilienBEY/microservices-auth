@@ -1,7 +1,5 @@
-import { PrismaModule } from "@app/common"
-import { AppAuthModule } from "@app/common/auth/auth.module"
+import { CommonModule } from "@app/common"
 import { RmqModule } from "@app/common/rmq/rmq.module"
-import { AppThrottlerModule } from "@app/common/throttler/throttler.module"
 import { Module } from "@nestjs/common"
 import { ConfigModule } from "@nestjs/config"
 import { JwtModule } from "@nestjs/jwt"
@@ -26,9 +24,7 @@ import { AuthService } from "./auth.service"
       secret: process.env.JWT_SECRET,
     }),
     RmqModule.register({ name: "USER" }),
-    PrismaModule,
-    AppAuthModule,
-    AppThrottlerModule,
+    CommonModule,
   ],
   controllers: [AuthController],
   providers: [AuthService],
