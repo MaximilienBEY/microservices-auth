@@ -20,10 +20,11 @@ import { UpdateMeDto } from "./dto/update-me.dto"
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private health: HealthCheckService,
+    private readonly health: HealthCheckService,
     @Inject("USER") private userClient: ClientProxy,
   ) {}
 
+  @Public()
   @Get("health")
   @HealthCheck()
   check() {
