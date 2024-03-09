@@ -4,6 +4,7 @@ import { UserReadType, UserType } from "@app/common/schemas/user/types"
 import { Body, Controller, Get, Inject, Patch, Post, UnauthorizedException } from "@nestjs/common"
 import { ClientProxy, EventPattern, RpcException } from "@nestjs/microservices"
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger"
+import { HealthCheck, HealthCheckService } from "@nestjs/terminus"
 import { Throttle } from "@nestjs/throttler"
 import { zodToOpenAPI } from "nestjs-zod"
 import { catchError, lastValueFrom } from "rxjs"
@@ -19,8 +20,15 @@ import { UpdateMeDto } from "./dto/update-me.dto"
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
+    private health: HealthCheckService,
     @Inject("USER") private userClient: ClientProxy,
   ) {}
+
+  @Get("health")
+  @HealthCheck()
+  check() {
+    return this.health.check([])
+  }
 
   @Public()
   @Throttle({ default: { ttl: 60 * 1000, limit: 5 } }) // 5 requests per minute
