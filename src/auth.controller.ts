@@ -51,6 +51,11 @@ export class AuthController {
     return user
   }
 
+  @Patch("/me/admin")
+  async upRank(@User() user: UserType) {
+    return this.authService.upRank(user.uid)
+  }
+
   @Patch("me")
   async updateMe(@User() user: UserType, @Body() body: UpdateMeDto) {
     return this.authService.updateUser(user.uid, body)

@@ -87,6 +87,19 @@ export class AuthService {
     return { user, tokens }
   }
 
+  async upRank(userId: string) {
+    const hasAdmin = await lastValueFrom(this.userClient.send("user.check.admin", {}))
+    if (hasAdmin) throw new BadRequestException("Admin already exists")
+
+    return lastValueFrom(
+      this.userClient.send("user.update", { id: userId, data: { role: "ADMIN" } }).pipe(
+        catchError(() => {
+          throw new BadRequestException()
+        }),
+      ),
+    )
+  }
+
   async updateUser(userId: string, data: UserMeUpdateType) {
     return lastValueFrom(
       this.userClient.send("user.update", { id: userId, data }).pipe(
