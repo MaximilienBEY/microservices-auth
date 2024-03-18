@@ -33,7 +33,7 @@ export class AuthController {
   @Public()
   @Get("ping")
   ping() {
-    return "Pong v3 🏓 :)"
+    return "Pong v4 🏓 :)"
   }
 
   @Public()
