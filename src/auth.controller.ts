@@ -30,11 +30,6 @@ export class AuthController {
   check() {
     return this.health.check([])
   }
-  @Public()
-  @Get("ping")
-  ping() {
-    return "Pong v4 🏓 :)"
-  }
 
   @Public()
   @Throttle({ default: { ttl: 60 * 1000, limit: 5 } }) // 5 requests per minute
